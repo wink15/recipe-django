@@ -12,9 +12,9 @@ RECIPE_URL=reverse('recipe:recipe-list')
 def create_recipe(user, **params):
     defaults={
         'title': 'test example',
-        'time_minutes':22,
+        'time_minute': 22,
         'price': Decimal('5.50'),
-        'description':'Sample description',
+        'descripcion':'Sample description',
         'link':'http://example.com/recipe.pdf'
     }
 
@@ -46,7 +46,7 @@ class PrivetRecipeAPITest(TestCase):
     def  test_retrive_recipe(self):
         create_recipe(user=self.user)
         create_recipe(user=self.user)
-        res=self.cliente.get(RECIPE_URL)
+        res=self.client.get(RECIPE_URL)
 
         recipes=Recipe.objects.all().order_by('-id')
         serializer= RecipeSerializer(recipes, many=True)
