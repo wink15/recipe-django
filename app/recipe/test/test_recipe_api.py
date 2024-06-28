@@ -163,8 +163,9 @@ class PrivetRecipeAPITest(TestCase):
         }
 
         url = detail_url(recipe.id)
-        res = self.client.patch(url, payload)
+        self.client.patch(url, payload)
         recipe.refresh_from_db()
+
         self.assertEqual(recipe.user, self.user)
 
     def test_delete_recipe(self):

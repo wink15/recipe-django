@@ -37,6 +37,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
 
+class Tag(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Recipe(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -48,6 +59,7 @@ class Recipe(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     descripcion = models.TextField(blank=True)
     link = models.CharField(blank=True, max_length=200)
+    tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.title
