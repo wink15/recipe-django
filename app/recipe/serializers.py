@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Recipe, Tag
+from core.models import Ingredient, Recipe, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -10,6 +10,14 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields=['id']
 
 
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Ingredient
+        fields=['id','name']
+        read_only_fields=['id']
+
+        
+        
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -37,7 +45,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        tags= validated_data.pop('tags, None')
+        tags= validated_data.pop('tags', None)
         if tags is not None:
             instance.tags.clear()
             self._get_or_create_tags(tags, instance)

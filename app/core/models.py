@@ -47,6 +47,17 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Ingredient(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 
 class Recipe(models.Model):
     user = models.ForeignKey(
@@ -60,6 +71,7 @@ class Recipe(models.Model):
     descripcion = models.TextField(blank=True)
     link = models.CharField(blank=True, max_length=200)
     tags = models.ManyToManyField('Tag')
+    ingredients= models.ManyToManyField('Ingredient')
 
     def __str__(self):
         return self.title
